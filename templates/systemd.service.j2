@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Set ip addresses for pnet-interfaces
+Requires=systemd-networkd.socket
+After=systemd-networkd.socket
+
+[Service]
+Type=oneshot
+ExecStartPre=/lib/systemd/systemd-networkd-wait-online --interface=pnet1
+ExecStartPre=/lib/systemd/systemd-networkd-wait-online --interface=pnet9
+ExecStart=/root/scripts/interfaces_config.sh
+
+[Install]
+WantedBy=multi-user.target
